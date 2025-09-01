@@ -2,7 +2,6 @@ import streamlit as st
 
 st.title("Realistic Calculator")
 
-# Initialize session state variables
 if "expression" not in st.session_state:
     st.session_state.expression = ""
 
@@ -14,16 +13,13 @@ def clear_expression():
 
 def calculate_result():
     try:
-        # Evaluate the expression safely
         result = eval(st.session_state.expression)
         st.session_state.expression = str(result)
     except Exception:
         st.session_state.expression = "Error"
 
-# Display current expression
 st.text_area("Calculator Display:", st.session_state.expression, height=100, key="display")
 
-# Create buttons in a grid layout
 cols = st.columns(4)
 
 buttons = [
@@ -41,6 +37,9 @@ for row in buttons:
             else:
                 add_to_expression(btn)
 
-# Equal button spans full width
 if st.button("="):
     calculate_result()
+
+# Reset button to clear expression
+if st.button("Reset"):
+    clear_expression()
