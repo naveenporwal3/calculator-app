@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.title("Realistic Calculator")
+st.title("Fast & Compact Calculator")
 
 if "expression" not in st.session_state:
     st.session_state.expression = ""
@@ -18,28 +18,26 @@ def calculate_result():
     except Exception:
         st.session_state.expression = "Error"
 
-st.text_area("Calculator Display:", st.session_state.expression, height=100, key="display")
+# Use a disabled text_input for compact display
+st.text_input("Display", value=st.session_state.expression, key="display", disabled=True)
 
-cols = st.columns(4)
-
+# Define buttons including all operators you want
 buttons = [
-    ('7', '8', '9', '/'),
-    ('4', '5', '6', '*'),
-    ('1', '2', '3', '-'),
-    ('0', '.', 'C', '+'),
+    '7', '8', '9', '/', 'C',
+    '4', '5', '6', '*', '(',
+    '1', '2', '3', '-', ')',
+    '0', '.', '=', '+', 'Reset'
 ]
 
-for row in buttons:
-    for i, btn in enumerate(row):
-        if cols[i].button(btn):
-            if btn == 'C':
-                clear_expression()
-            else:
-                add_to_expression(btn)
+cols = st.columns(5)
 
-if st.button("="):
-    calculate_result()
-
-# Reset button to clear expression
-if st.button("Reset"):
-    clear_expression()
+for i, button in enumerate(buttons):
+    if cols[i % 5].button(button):
+        if button == 'C':
+            clear_expression()
+        elif button == 'Reset':
+            clear_expression()
+        elif button == '=':
+            calculate_result()
+        else:
+            add_to_expression(button)
