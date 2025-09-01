@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.title("Simple Calculator ")
+st.title("Simple Calculator by Naveen ")
 
 a = st.number_input("Enter your first number:")
 b = st.number_input("Enter your second number:")
