@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.title("Fast & Compact Calculator")
+st.title("Faster Calculator")
 
 if "expression" not in st.session_state:
     st.session_state.expression = ""
@@ -18,10 +18,8 @@ def calculate_result():
     except Exception:
         st.session_state.expression = "Error"
 
-# Use a disabled text_input for compact display
-st.text_input("Display", value=st.session_state.expression, key="display", disabled=True)
+st.text_input("Display", value=st.session_state.expression, disabled=True, key="display")
 
-# Define buttons including all operators you want
 buttons = [
     '7', '8', '9', '/', 'C',
     '4', '5', '6', '*', '(',
@@ -31,13 +29,18 @@ buttons = [
 
 cols = st.columns(5)
 
+# To avoid multiple state changes in one rerun, use a flag variable
+clicked_button = None
+
 for i, button in enumerate(buttons):
     if cols[i % 5].button(button):
-        if button == 'C':
-            clear_expression()
-        elif button == 'Reset':
-            clear_expression()
-        elif button == '=':
-            calculate_result()
-        else:
-            add_to_expression(button)
+        clicked_button = button
+
+# Process only after all buttons checked, to avoid multiple triggers
+if clicked_button:
+    if clicked_button == 'C' or clicked_button == 'Reset':
+        clear_expression()
+    elif clicked_button == '=':
+        calculate_result()
+    else:
+        add_to_expression(clicked_button)
