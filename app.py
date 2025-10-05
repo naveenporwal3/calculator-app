@@ -4,8 +4,8 @@ import math
 st.title("🔢 Advanced Calculator by Naveen")
 
 # Input numbers
-a = st.number_input("Enter your first number:", value=0.0)
-b = st.number_input("Enter your second number:", value=0.0)
+a = st.number_input("Enter your first number (a):", value=0.0)
+b = st.number_input("Enter your second number (b):", value=0.0)
 
 # Operator selection
 operator = st.selectbox(
@@ -16,23 +16,25 @@ operator = st.selectbox(
 # Calculation function
 def calculator(a, b, operator):
     if operator == "+":
-        return a + b
+        return f"{a} + {b} = {a + b}"
     elif operator == "-":
-        return a - b
+        return f"{a} - {b} = {a - b}"
     elif operator == "*":
-        return a * b
+        return f"{a} × {b} = {a * b}"
     elif operator == "/":
         if b == 0:
             return "❌ Cannot divide by zero"
-        return a / b
+        return f"{a} ÷ {b} = {a / b}"
     elif operator == "Power (a^b)":
-        return a ** b
+        return f"{a} ^ {b} = {a ** b}"
     elif operator == "Modulo (a % b)":
         if b == 0:
             return "❌ Cannot perform modulo by zero"
-        return a % b
+        return f"{a} % {b} = {a % b}"
     elif operator == "Square Root (√a, √b)":
-        return f"√a = {math.sqrt(a) if a >= 0 else 'Invalid'}, √b = {math.sqrt(b) if b >= 0 else 'Invalid'}"
+        sqrt_a = math.sqrt(a) if a >= 0 else "Invalid"
+        sqrt_b = math.sqrt(b) if b >= 0 else "Invalid"
+        return f"√a = {sqrt_a}, √b = {sqrt_b}"
     elif operator == "Factorial (a!, b!)":
         if a < 0 or b < 0:
             return "❌ Factorial not defined for negative numbers"
